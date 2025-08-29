@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 
 """
 run 
-python analysis/kmer_enrichment.py --k 4
+python analysis/kmer/kmer_enrichment.py --k 4
 or something like 
-python analysis/kmer_enrichment.py --k 6 --collapse_rc
+python analysis/kmer/kmer_enrichment.py --k 6 --collapse_rc
 
 """
 def read_fasta(path):

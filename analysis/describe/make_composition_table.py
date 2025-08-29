@@ -8,7 +8,7 @@ import numpy as np
 
 """
 run this 
-python analysis/make_composition_table.py \
+python analysis/describe/make_composition_table.py \
   --scores outputs/describe_run/per_seq_scores.csv \
   --outdir outputs/tables \
   --round 5

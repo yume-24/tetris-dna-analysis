@@ -8,16 +8,16 @@ import math
 """
 RUN THIS 
 
-python analysis/score_correlation.py \
-  --model model-mlp2.pt \
-  --test tetris_test-5k.json \
-  --human "tetris_data copy.json" \
-  --N 2000 --L 200 --outdir outputs/correlations
+python analysis/correlate/score_correlation.py \
+  --model model-cnn-sl.pt \
+  --test tetris_test.json \
+  --human "gcloud_data.json" \
+  --N 300 --L 200 --outdir outputs/correlations
 
 """
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 

@@ -6,7 +6,7 @@ import numpy as np
 #do composition table separately
 """"
 run this 
-python analysis/make_tables.py \
+python analysis/describe/make_tables.py \
   --scores outputs/describe_run/per_seq_scores.csv \
   --outdir outputs/tables \
   --round 5
