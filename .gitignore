@@ -1,3 +1,10 @@
-tetris_data.json
-tetris_data-15k.json
-tetris_test.json
+__pycache__/
+*.pyc
+.venv/
+
+# models / checkpoints
+*.pt
+*.onnx
+
+# generated artifacts
+outputs/
