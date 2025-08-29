@@ -20,3 +20,7 @@ tetris_test*.json
 # logs & local configs
 *.log
 *.local.yaml
+
+# OS cruft
+.DS_Store
+*.webloc
