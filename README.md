@@ -18,7 +18,7 @@ End-to-end pipeline that:
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Install deps (or install selectively if you prefer)
+# Install deps (or install selectively)
 pip install -r requirements.txt  # if present
 # otherwise at minimum:
 pip install numpy pandas matplotlib scikit-learn scipy
@@ -26,7 +26,7 @@ pip install numpy pandas matplotlib scikit-learn scipy
 # (If needed for model inference)
 pip install torch  # choose the right build for your OS/CPU/GPU
 
-# Run the whole pipeline
+# Run entire pipeline
 python analysis/main.py
 
 ```
