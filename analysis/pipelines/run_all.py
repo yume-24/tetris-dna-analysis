@@ -1,18 +1,22 @@
 # analysis/pipelines/run_all.py
 import argparse, subprocess, pathlib as P, sys
 
+# at the top
+import subprocess, sys
+from pathlib import Path
+
 def run(cmd):
-    print("\n$"," ".join(map(str,cmd)))
+    print("\n$"," ".join(map(str, cmd)))
     subprocess.check_call([str(x) for x in cmd])
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--config", default=str(P.Path(__file__).resolve().parents[2]/".venv/config/default.yaml"))
-    _ = ap.parse_args()  # kept for future use
+    repo = Path(__file__).resolve().parents[2]   # repo root
+    py = sys.executable                          # <<< use the current interpreter
+    out = repo / "outputs/analysis"
+    out.mkdir(parents=True, exist_ok=True)
 
-    repo = P.Path(__file__).resolve().parents[2]
-    py   = repo/".venv"/"bin"/"python"
-    out  = repo/"outputs"
+    # ... keep the rest of your commands as-is ...
+
 
     ai_fa = out/"raw/seqs_main_ai.fasta"
     hu_fa = out/"raw/seqs_main_human.fasta"
@@ -64,12 +68,13 @@ def main():
          "--outdir", out / "analysis/pwm_logits_matched"])
 
     # 6) Entropy correlations (shared axes) from the per-seq tables above
+    # 6) Entropy correlations (CSV from corr_out; FASTAs from out/raw)
     run([py, repo / "analysis/plots/entropy_correlations.py",
-         "--ai_csv", repo / "outputs/correlate_gcloud/per_seq_test.csv",
-         "--human_csv", repo / "outputs/correlate_gcloud/per_seq_human.csv",
-         "--ai_fasta", repo / "outputs/raw/seqs_main_ai.fasta",
-         "--human_fasta", repo / "outputs/raw/seqs_main_human.fasta",
-         "--outdir", repo / "outputs/analysis/entropy_corrs"])
+         "--ai_csv", corr_out / "per_seq_test.csv",
+         "--human_csv", corr_out / "per_seq_human.csv",
+         "--ai_fasta", ai_fa,
+         "--human_fasta", hu_fa,
+         "--outdir", out / "entropy_corrs"])
 
     print("\n[OK] Pipeline complete.")
 
