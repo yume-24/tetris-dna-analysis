@@ -11,6 +11,8 @@ End-to-end pipeline that:
 
 ## Quick start
 
+* must obtain .json and .pt files separately 
+
 ```bash
 # Create & enter a virtualenv (recommended)
 python3 -m venv .venv
