@@ -68,6 +68,8 @@ def _detect_and_load(path: str) -> Tuple[str, Any]:
         # else JSONL
         return "jsonl", path
 
+
+#estimates number of entries based on format and returns None on errors
 def json_len(path: str) -> Optional[int]:
     try:
         fmt, obj = _detect_and_load(path)
@@ -84,7 +86,7 @@ def json_len(path: str) -> Optional[int]:
         return None
 
 def iter_rows(path: str) -> Iterable[Dict[str, Any]]:
-    """Yield dict rows from any supported format."""
+    """Yield dict rows from ANY supported format."""
     fmt, obj = _detect_and_load(path)
     if fmt == "array":
         for r in obj:
@@ -119,6 +121,7 @@ def normalize_for_model(src: str,
                         score_key: str = "score",
                         min_score: Optional[float] = None) -> Tuple[str, int]:
     """
+    reads rows via iter-rows
     Create a normalized JSON array at `dst` with entries like:
       {"game_matrix": <2D list>, "score": <number>, ...}
     mapping common alternatives:
@@ -159,6 +162,8 @@ def normalize_for_model(src: str,
     print(f"[normalize] {src}: total={total}  kept={kept}  -> {dst}")
     return dst, kept
 
+
+#scans for DNA in sequences printed by infer()
 def parse_sequences_from_stdout(text: str):
     seqs, in_block = [], False
     for line in text.splitlines():
@@ -196,6 +201,8 @@ def coerce_to_strings(objs):
         pass
     return seqs
 
+#choose which training module to use
+#sets STATE_PATH and returns the designated infer()
 def import_infer(which: str, model_path: str):
     import importlib
     if which == "sl_cnn":

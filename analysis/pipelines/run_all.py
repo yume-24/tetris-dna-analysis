@@ -67,7 +67,7 @@ def main():
          "--match_ai_to_human", "--seed", "7",
          "--outdir", out / "analysis/pwm_logits_matched"])
 
-    # 6) Entropy correlations (shared axes) from the per-seq tables above
+
     # 6) Entropy correlations (CSV from corr_out; FASTAs from out/raw)
     run([py, repo / "analysis/plots/entropy_correlations.py",
          "--ai_csv", corr_out / "per_seq_test.csv",
