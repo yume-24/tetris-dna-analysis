@@ -1,10 +1,22 @@
-__pycache__/
-*.pyc
+# venv & caches
 .venv/
+__pycache__/
 
-# models / checkpoints
+# generated outputs & artifacts
+outputs/
+
+# large models & arrays
 *.pt
 *.onnx
+*.npz
+*.npy
+*.pkl
 
-# generated artifacts
-outputs/
+# local datasets (keep out of repo)
+gcloud_data.json
+tetris_data*.json
+tetris_test*.json
+
+# logs & local configs
+*.log
+*.local.yaml
