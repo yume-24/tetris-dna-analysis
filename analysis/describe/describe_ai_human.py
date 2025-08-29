@@ -34,6 +34,7 @@ def read_fasta(path):
     return seqs
 
 # ---------- Composition & Entropy ----------
+# counts A/C/G/T with fixed 4 long vec. ignores non acgt characters
 def seq_counts(s):
     c = np.zeros(4, dtype=np.int64)
     for ch in s:
@@ -41,12 +42,14 @@ def seq_counts(s):
         if i>=0: c[i]+=1
     return c
 
+#converts counts -> fractions for a,c,g,t and GC
 def base_fracs(s):
     c = seq_counts(s).astype(float)
     n = c.sum() if c.sum()>0 else 1.0
     a, c_, g, t = c / n
     return float(a), float(c_), float(g), float(t), float((c_+g))
 
+#shannon entropy over a/c/g/t
 def shannon_entropy(s):
     c = seq_counts(s).astype(float)
     n = c.sum()
@@ -56,13 +59,16 @@ def shannon_entropy(s):
     return float(-(p*np.log2(p)).sum())
 
 # ---------- k-mer featurization ----------
+#enumerates every k-mer over a/c/g/t
 def all_kmers(k):
     return ["".join(t) for t in itertools.product(ALPH, repeat=k)]
 
+#builds {k-mer -> column index} + ordered list
 def kmer_index(k):
     km = all_kmers(k)
     return {kmer:i for i,kmer in enumerate(km)}, km
 
+#slides window. normalizes by num of valid windows. produces freq vector for later use (pca, tsne)
 def seq_kmer_vec(s, k, idx):
     v = np.zeros(len(idx), dtype=float)
     valid = 0
@@ -76,6 +82,7 @@ def seq_kmer_vec(s, k, idx):
     return v
 
 # ---------- MEME PWM parsing & scoring (external, max-pooled & normalized) ----------
+#parses MEME, collects rows (a,c,g,t),clips tiny probs, row-normalizes to probailities
 def parse_meme_pwm(path):
     rows = []
     in_mat = False
@@ -100,6 +107,7 @@ def parse_meme_pwm(path):
 
 RC = str.maketrans("ACGT", "TGCA")
 def revcomp(s): return s.translate(RC)[::-1]
+
 
 def pwm_max_norm_score(seq, pwm):
     L, w = len(seq), pwm.shape[0]
